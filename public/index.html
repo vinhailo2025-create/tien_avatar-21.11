@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<title>NGUYÊN PHÁT · Hợp Tác - Đồng Hành - Phát Triển — Tạo Khung Hình</title>
+<meta property="og:title" content="Tạo Khung Hình Thương Hiệu NGUYÊN PHÁT">
+<meta property="og:description" content="Hợp Tác - Đồng Hành - Phát Triển · Ghép ảnh cá nhân và chia sẻ lên Facebook chỉ trong 5 giây!">
+<meta property="og:image" content="https://sukienai.com/nguyen_phat/shares/default-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<style>
+@font-face{font-family:"Noto Serif VN";src:url("NotoSerif-Vietnamese.ttf") format("truetype");font-style:normal;font-weight:100 900;font-display:swap}
+:root{
+  color-scheme:dark;
+  --gold:#e0c491;
+  --gold-dark:#aa8951;
+  --navy:#071326;
+  --card:#101e22;
+  --line:#c7aa703b;
+  --muted:#bec9c7;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{
+  margin:0;
+  background:radial-gradient(ellipse at 50% 0%,#122f52,#0a1728 56%,#060d18);
+  color:#f6f2e7;
+  font:12px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  min-height:100dvh;
+}
+body.modal-open{overflow:hidden}
+
+header{
+  max-width:1080px;
+  margin:auto;
+  padding:12px 24px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.brand{
+  color:var(--gold);
+  font:700 12px/1.4 system-ui,sans-serif;
+  letter-spacing:.12em;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.brand span{color:#ffd25a}
+.header-date{color:var(--gold);font-size:10px;letter-spacing:.14em;font-weight:600}
+
+.event-intro{
+  max-width:1080px;
+  margin:auto;
+  text-align:center;
+  padding:16px 20px 4px;
+}
+.event-intro h1{
+  font:600 clamp(23px,3vw,34px)/1.2 "Noto Serif VN",Georgia,serif;
+  letter-spacing:-.02em;
+  color:#fff0d2;
+  margin:0 0 4px;
+}
+.event-subtitle{
+  margin:0;
+  color:var(--muted);
+  font:400 clamp(12px,1.6vw,16px)/1.5 "Noto Serif VN",Georgia,serif;
+}
+
+main{
+  max-width:1080px;
+  margin:auto;
+  padding:20px 24px 42px;
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:28px;
+  align-items:start;
+}
+
+.preview-col{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:sticky;
+  top:22px;
+  min-width:0;
+}
+.canvas-wrap{
+  position:relative;
+  width:100%;
+  max-width:495px;
+  border-radius:14px;
+  overflow:hidden;
+  background:transparent;
+}
+canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  cursor:grab;
+  touch-action:none;
+}
+canvas:active{cursor:grabbing}
+
+.canvas-empty-cta{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  text-align:center;
+  padding:20px;
+}
+.canvas-empty-btn{
+  pointer-events:auto;
+  background:linear-gradient(145deg,#12385b,#081d36);
+  border:1px solid #d6b672;
+  border-radius:10px;
+  color:#fff0cc;
+  font:650 clamp(11.2px,1.92vw,14.4px)/1.35 "Noto Serif VN",Georgia,serif;
+  padding:12px clamp(14px,3vw,24px);
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 8px 22px #020b1d90;
+}
+.canvas-empty-btn svg{flex:none;color:#e0c491}
+.canvas-empty-btn:hover{background:linear-gradient(145deg,#194b78,#0d2c4f)}
+
+.quick-bar{
+  width:100%;
+  max-width:540px;
+  margin-top:12px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.chip-btn{
+  width:auto;
+  margin:0;
+  padding:8px 13px;
+  font-size:10px;
+  font-weight:600;
+  border-radius:999px;
+  background:#152538;
+  color:#f8fafc;
+  border:1px solid var(--line);
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.chip-btn:hover:not(:disabled){background:#1f3652;border-color:var(--gold)}
+.chip-btn:disabled{opacity:.45;cursor:not-allowed}
+
+.gesture-hint{
+  font-size:9.6px;
+  color:var(--muted);
+  margin:8px 0 0;
+  text-align:center;
+}
+
+.controls{
+  min-width:0;
+  background:#0f1d2e;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:0 20px 50px #0007;
+}
+.step-card{
+  background:transparent;
+  border:0 solid var(--line);
+  border-bottom-width:1px;
+  margin:0 0 13px;
+  padding:4px 0 15px;
+}
+.step-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font:650 13.6px/1.35 "Noto Serif VN",Georgia,serif;
+  color:#eed8ad;
+  margin-bottom:10px;
+  gap:8px;
+}
+.step-badge{
+  font-family:system-ui,sans-serif;
+  background:#dec18b14;
+  border:1px solid var(--line);
+  color:var(--gold);
+  padding:2px 9px;
+  border-radius:999px;
+  font-size:9.2px;
+  white-space:nowrap;
+}
+
+.file-input-hidden{display:none}
+.btn{
+  width:100%;
+  padding:13px 16px;
+  border:1px solid #dec18b;
+  background:linear-gradient(145deg,#eed8ad,#c6a36c);
+  border-radius:11px;
+  color:#201810;
+  font-weight:750;
+  font-size:11.6px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:filter .18s,transform .1s;
+}
+.btn:hover:not(:disabled){filter:brightness(1.07)}
+.btn:active:not(:disabled){transform:scale(0.99)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn-secondary{
+  background:#152538;
+  border-color:var(--line);
+  color:var(--gold);
+}
+.btn-fb{
+  background:#1877f2;
+  border-color:#1877f2;
+  color:#fff;
+  font-size:12px;
+}
+.btn-row{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:8px;
+}
+#cut-main{
+  min-height:44px;
+  padding-inline:14px;
+  background:linear-gradient(140deg,#16426b,#0c2947);
+  border:1px solid #dfc187;
+  color:#fff0cf;
+  font-size:13px;
+  font-weight:750;
+}
+#cut-main:not(:disabled){box-shadow:0 4px 14px #03101c80}
+#cut-main:hover:not(:disabled){background:#1e5587}
+#cut-main:disabled{opacity:.72;cursor:not-allowed}
+
+label{display:block;margin:9px 0 4px;font-size:10px;color:var(--muted);font-weight:500}
+input[type=text],textarea{
+  width:100%;
+  padding:10px 12px;
+  background:#091320;
+  border:1px solid #354c68;
+  color:#f3ede0;
+  border-radius:9px;
+  font:inherit;
+  font-size:10.8px;
+}
+input[type=text]::placeholder,textarea::placeholder{font-size:11px;opacity:.65}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--gold)}
+input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
+.sliders-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.caption-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin-bottom:9px;
+}
+.caption-item{
+  display:block;
+  text-align:left;
+  width:100%;
+  background:#152538;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:9px 11px;
+  color:#e2e8f0;
+  cursor:default;
+  transition:border-color .15s,background .15s;
+}
+.caption-item:hover,.caption-item[open]{
+  background:#1c314a;
+  border-color:var(--gold);
+}
+.caption-item-title{
+  display:list-item;
+  cursor:pointer;
+  margin:0;
+  font-weight:700;
+  font-size:10.4px;
+  color:var(--gold);
+}
+.caption-content{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  margin:8px 0 2px;
+  padding:10px 12px;
+  line-height:1.55;
+  color:#f3ede0;
+  background:#0a1524;
+  border:1px dashed #c7aa7066;
+  border-radius:8px;
+  cursor:pointer;
+  transition:background .15s,border-color .15s;
+}
+.caption-content:hover{background:#102136;border-color:var(--gold)}
+.caption-content.copied{background:#113325;border:1px solid #22c55e}
+.caption-hint{display:block;margin-top:6px;font-size:9.5px;font-weight:700;color:var(--gold)}
+.caption-content.copied .caption-hint{color:#4ade80}
+
+.status-bar{
+  min-height:38px;
+  margin:10px 0 12px;
+  padding:9px 12px;
+  border-radius:10px;
+  background:#dec18b0d;
+  border:1px solid var(--line);
+  font-size:10.4px;
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.action-stack{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.action-stack .btn{
+  min-width:0;
+  padding:12px 6px;
+  font-size:clamp(9.6px,1.6vw,11.2px);
+  text-align:center;
+}
+.action-stack .btn svg{flex:none;width:16px;height:16px}
+
+footer{
+  max-width:1080px;
+  margin:8px auto 0;
+  border-top:1px solid #f5d06c22;
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+  padding:18px 16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+}
+.footer-logo{
+  background:#fffdf8;
+  padding:7px 16px;
+  border-radius:8px;
+  border:1px solid #dec18b;
+  display:inline-flex;
+  align-items:center;
+  box-shadow:0 8px 24px #0006;
+}
+.footer-logo img{height:23px;width:auto;display:block}
+.footer-copy{color:var(--gold);font-weight:700;letter-spacing:1px;font-size:8.8px}
+
+.save-overlay{
+  position:fixed;
+  z-index:9999;
+  inset:0;
+  padding:14px;
+  background:#000d;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.save-card{
+  width:min(540px,100%);
+  max-height:94dvh;
+  overflow:auto;
+  background:#152538;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 30px 90px #000;
+}
+.save-card h2{font:700 16px "Noto Serif VN",Georgia,serif;margin:0 0 8px;color:var(--gold)}
+.save-card p{margin:0 0 12px;font-size:10.8px;color:var(--muted);line-height:1.5}
+.save-card img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:55dvh;
+  object-fit:contain;
+  background:#071020;
+  border-radius:10px;
+  -webkit-touch-callout:default;
+  user-select:auto;
+  margin-bottom:12px;
+}
+
+@media(max-width:860px){
+  header{padding:14px 16px}
+  .event-intro{padding:20px 16px 6px}
+  main{grid-template-columns:minmax(0,1fr);max-width:580px;gap:22px;padding:16px 14px 30px}
+  .preview-col{position:static}
+  .controls{padding:14px}
+  input[type=text],textarea{font-size:12.8px}
+}
+@media(max-width:600px){
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+  header{gap:6px 12px;padding:10px 14px}
+  .event-intro{padding:12px 14px 0}
+  main{padding:12px 14px 20px;gap:14px}
+  .canvas-wrap{border-radius:12px}
+  .quick-bar{margin-top:8px;gap:5px}
+  .quick-bar .chip-btn{min-height:44px;padding:6px 9px}
+  .gesture-hint{max-width:34ch}
+  .controls{padding:12px}
+  .step-card{padding:3px 0 12px;margin-bottom:10px}
+  .btn,.caption-item-title{min-height:44px}
+  .caption-item{padding:0 10px}
+  .caption-item-title{padding:11px 0}
+  .caption-content{margin:0 0 10px}
+  #copy-caption{min-height:44px}
+  input[type=text]{min-height:38px;padding:8px 10px;font-size:12px}
+  input[type=text]::placeholder{font-size:10.5px;opacity:.65}
+  input[type=range]{min-height:32px;margin-inline:0}
+  .action-stack{
+    position:fixed;z-index:10;bottom:0;left:0;right:0;
+    padding:9px max(14px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));
+    background:#091320f5;border-top:1px solid var(--line);
+  }
+  .action-stack .btn{min-height:46px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span>NP</span> NGUYÊN PHÁT</div>
+  <span class="header-date">HỢP TÁC · ĐỒNG HÀNH · PHÁT TRIỂN</span>
+</header>
+
+<div class="event-intro">
+  <h1>Hợp tác · Đồng hành · Phát triển</h1>
+  <p class="event-subtitle">Tạo khung hình thương hiệu Nguyên Phát</p>
+</div>
+
+<main>
+  <section class="preview-col" aria-label="Xem trước khung hình">
+    <div class="canvas-wrap">
+      <canvas id="poster" width="1536" height="1536"></canvas>
+      <div id="empty-cta" class="canvas-empty-cta">
+        <button type="button" id="cta-pick" class="canvas-empty-btn">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h4l1.5-2h5l1.5 2h4a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.3"/></svg>
+          <span>Chạm để chọn ảnh của bạn</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="quick-bar">
+      <button type="button" id="btn-reset" class="chip-btn" disabled>🎯 Căn giữa lại</button>
+    </div>
+    <p class="gesture-hint">💡 <strong>Mẹo nhanh:</strong> Dùng 1 ngón tay kéo ảnh, 2 ngón tay phóng to/thu nhỏ trực tiếp trên khung hình.</p>
+  </section>
+
+  <section class="controls">
+    <div class="step-card">
+      <div class="step-title">
+        <span>01 · Chân dung</span>
+        <span class="step-badge">Bắt buộc</span>
+      </div>
+      <input id="photo" class="file-input-hidden" type="file" accept="image/jpeg,image/png,image/webp">
+      <button type="button" id="pick-btn" class="btn">📷 Chọn ảnh chân dung từ máy</button>
+      <div class="btn-row" id="ai-row" hidden>
+        <button type="button" id="cut-main" class="btn btn-secondary">✨ AI tách nền</button>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-title">
+        <span>02 · Căn ảnh và ghi tên</span>
+        <span class="step-badge">Tùy chọn</span>
+      </div>
+      <label for="zoom">Độ phóng ảnh (<span id="zoom-val">100%</span>)</label>
+      <input id="zoom" type="range" min="60" max="280" value="100">
+      <div class="sliders-grid">
+        <div>
+          <label for="x">Trái / Phải</label>
+          <input id="x" type="range" min="-160" max="160" value="0">
+        </div>
+        <div>
+          <label for="y">Lên / Xuống</label>
+          <input id="y" type="range" min="-180" max="220" value="0">
+        </div>
+      </div>
+      <div class="sliders-grid" style="margin-top:6px">
+        <div>
+          <label for="name">Họ và tên (nếu muốn hiện trên ảnh)</label>
+          <input id="name" type="text" maxlength="60" placeholder="Để trống nếu không cần" autocomplete="name">
+        </div>
+        <div>
+          <label for="role">Chức vụ / Đơn vị</label>
+          <input id="role" type="text" maxlength="90" placeholder="VD: Giám đốc · Nguyên Phát" autocomplete="organization-title">
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-title">
+        <span>03 · Mẫu nội dung đăng Facebook</span>
+        <button type="button" id="copy-caption" class="chip-btn" style="padding:4px 10px;font-size:9.2px">Sao chép</button>
+      </div>
+      <div id="caption-list" class="caption-list"></div>
+    </div>
+
+    <div id="status" class="status-bar" role="status" aria-live="polite">
+      👉 Hãy bấm “Chọn ảnh chân dung” để bắt đầu tạo khung hình Nguyên Phát.
+    </div>
+
+    <div class="action-stack">
+      <button type="button" id="download" class="btn" disabled>
+        ⬇️ Tải ảnh
+      </button>
+      <button type="button" id="share-fb" class="btn btn-fb">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Share Facebook
+      </button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo"><img src="king-ai-logo-horiz.png" alt="KING AI"></div>
+  <div class="footer-copy">BẢN QUYỀN THUỘC VỀ KING AI</div>
+  <div>GIẢI PHÁP AI • PHẦN MỀM • TỰ ĐỘNG HÓA</div>
+</footer>
+
+<div id="save-preview" class="save-overlay" hidden>
+  <div class="save-card" role="dialog" aria-modal="true" aria-labelledby="save-title">
+    <h2 id="save-title">Lưu hình ảnh vào điện thoại</h2>
+    <p id="save-desc">Nhấn giữ vào ảnh bên dưới khoảng 1 giây rồi chọn <strong>“Lưu vào Ảnh”</strong>.</p>
+    <img id="save-image" alt="Khung hình Nguyên Phát đã tạo">
+    <button id="close-save" class="btn btn-secondary" type="button">Đóng</button>
+  </div>
+</div>
+
+<script src="app.js?v=20261121-np1"></script>
+</body>
+</html>

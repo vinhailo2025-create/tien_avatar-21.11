@@ -369,12 +369,18 @@ async function triggerCutout(){
 
 $('cut-main').onclick=triggerCutout;
 
+// Xuất ảnh luôn trên nền trắng (canvas gốc để trong suốt cho phần xem trước)
+function exportCanvas(){
+ const c=document.createElement('canvas');c.width=canvas.width;c.height=canvas.height;
+ const x=c.getContext('2d');x.fillStyle='#ffffff';x.fillRect(0,0,c.width,c.height);x.drawImage(canvas,0,0);
+ return c;
+}
 function canvasBlob(type='image/png',quality=0.92){
- return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(Error('Không xuất được ảnh. Hãy thử lại.')),type,quality));
+ return new Promise((resolve,reject)=>exportCanvas().toBlob(blob=>blob?resolve(blob):reject(Error('Không xuất được ảnh. Hãy thử lại.')),type,quality));
 }
 function canvasFile(filename){
  if(cachedBlob)return new File([cachedBlob],filename,{type:'image/png'});
- const data=canvas.toDataURL('image/png').split(',')[1],raw=atob(data),bytes=new Uint8Array(raw.length);
+ const data=exportCanvas().toDataURL('image/png').split(',')[1],raw=atob(data),bytes=new Uint8Array(raw.length);
  for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
  return new File([bytes],filename,{type:'image/png'});
 }
@@ -385,7 +391,7 @@ function schedulePosterCache(){
  if(!portrait||!ready){cachedBlob=null;return;}
  cacheTimer=setTimeout(()=>{
   if(!portrait||!ready)return;
-  canvas.toBlob(b=>{if(b)cachedBlob=b;},'image/png');
+  exportCanvas().toBlob(b=>{if(b)cachedBlob=b;},'image/png');
  },120);
 }
 

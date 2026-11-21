@@ -93,9 +93,13 @@ async def create_download(request: Request):
     try:
         with Image.open(io.BytesIO(data)) as img:
             img.verify()
+        with Image.open(io.BytesIO(data)) as img:
+            rgba = img.convert('RGBA')
+        flat = Image.new('RGB', rgba.size, (255, 255, 255))
+        flat.paste(rgba, mask=rgba.getchannel('A'))  # luôn nền trắng
         dl_id = uuid.uuid4().hex[:14]
         png_path = shares_dir / f"{dl_id}.png"
-        png_path.write_bytes(bytes(data))
+        flat.save(png_path, format='PNG')
         cleanup_old_shares()
     except Exception:
         raise HTTPException(400, 'Không lưu được file tải về.')
@@ -126,7 +130,9 @@ async def create_share(request: Request):
             raise HTTPException(413, 'Ảnh quá lớn.')
     try:
         with Image.open(io.BytesIO(data)) as img:
-            img = img.convert('RGB')
+            rgba = img.convert('RGBA')
+            img = Image.new('RGB', rgba.size, (255, 255, 255))
+            img.paste(rgba, mask=rgba.getchannel('A'))
             img.thumbnail((1536, 1536))
             share_id = uuid.uuid4().hex[:12]
             full_path = shares_dir / f"{share_id}-full.jpg"

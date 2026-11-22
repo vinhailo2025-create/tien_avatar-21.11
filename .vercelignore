@@ -1,0 +1,7 @@
+server.py
+requirements.txt
+Dockerfile
+compose.yaml
+__pycache__/
+*.pyc
+deploy.py

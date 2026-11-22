@@ -156,7 +156,8 @@ function render(){
  if(!ready)return;
  ctx.clearRect(0,0,1536,1536);
  ctx.save();
- if(frameOutline)ctx.clip(frameOutline);
+ ctx.fillStyle='#ffffff';
+ ctx.fillRect(0,0,1536,1536);
  ctx.drawImage(base,0,0,1536,1536);
  const cx=758,cy=715,r=610;
  if(portrait){
@@ -222,11 +223,11 @@ function loadImage(url){
 
 base.onload=()=>{frameOutline=traceFrameOutline();ready=true;render()};
 base.onerror=()=>status('Không tải được khung nền. Hãy tải lại trang.');
-base.src='nguyen_phat.png?v=1';
+base.src='nguyen_phat.png?v=2';
 
 overlay.onload=()=>{overlayReady=true;render()};
 overlay.onerror=()=>status('Không tải được lớp khung viền. Hãy tải lại trang.');
-overlay.src='frame-overlay.png?v=1';
+overlay.src='frame-overlay.png?v=2';
 
 const fontLoad=document.fonts?document.fonts.load('700 36px "Noto Serif VN"'):Promise.resolve();
 fontLoad.catch(()=>{}).finally(()=>{fontReady=true;render()});

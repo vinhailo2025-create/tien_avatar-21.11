@@ -1,0 +1,14 @@
+{
+  "cleanUrls": true,
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://sukienai.com/nguyen_phat/api/$1"
+    },
+    {
+      "source": "/s/(.*)",
+      "destination": "https://sukienai.com/nguyen_phat/s/$1"
+    }
+  ]
+}

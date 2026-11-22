@@ -1,5 +1,7 @@
 __pycache__/
 *.pyc
 deploy.py
+.vercel
 public/shares/*.png
 public/shares/*-full.jpg
+
